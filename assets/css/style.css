@@ -1,0 +1,92 @@
+    * {
+        /*  border: 1px solid black; */
+    }
+    
+     :root {
+        --btn: rgb(47, 26, 106);
+        --btn-hover: rgb(181, 85, 227);
+        font-size: 140%;
+    }
+    
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400&family=Roboto:wght@300&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@200&display=swap');
+    body {
+        font-family: 'Lato', sans-serif;
+    }
+    
+    header,
+    main {
+        display: flex;
+        padding: 1rem;
+    }
+    
+    header div {
+        width: 50%;
+        font-size: 1.1rem;
+    }
+    
+    #high-score {
+        color: var(--btn-hover);
+        font-weight: 300;
+    }
+    
+    #quiz-timer {
+        text-align: right;
+    }
+    
+    main div.intro,
+    main div.question {
+        margin: 5rem auto;
+        max-width: 42rem;
+    }
+    
+    main div.intro {
+        text-align: center;
+    }
+    
+    .intro h1,
+    .question h2 {
+        font-size: 2rem;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-weight: 600;
+    }
+    
+    main div.question,
+    div .question h2 {
+        text-align: left;
+    }
+    
+    .question ol {
+        list-style-position: inside;
+        padding: 0;
+    }
+    
+    main div p {
+        font-size: 1.3rem;
+        font-weight: 300;
+        margin-bottom: 1.8rem;
+    }
+    
+    li.btn {
+        display: list-item;
+        text-align: left;
+        margin: 0 0 .8rem 0;
+        max-width: 15rem;
+    }
+    
+    .btn {
+        border: none;
+        background-color: var(--btn);
+        border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px 0px rgba(0, 0, 0, 0.2) 0px 1px 1px 0px;
+        color: white;
+        display: inline-block;
+        font-size: 1.2rem;
+        padding: 1rem 1.7rem;
+        text-align: center;
+        cursor: pointer;
+    }
+    
+    .btn:hover {
+        background-color: var(--btn-hover);
+    }
