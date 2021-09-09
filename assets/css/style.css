@@ -1,5 +1,8 @@
     * {
         /*  border: 1px solid black; */
+        margin: 0;
+        padding: 0;
+        box-sizing: boder-box;
     }
     
      :root {
@@ -35,26 +38,42 @@
         text-align: right;
     }
     
-    main div.intro,
-    main div.question {
-        margin: 5rem auto;
+    main div,
+    #feedback {
+        margin: 0 auto;
+        min-width: 50%;
         max-width: 42rem;
+        font-size: 1.rem;
     }
     
     main div.intro {
         text-align: center;
     }
     
+    #start-quiz {
+        margin-top: 1.8rem;
+    }
+    
     .intro h1,
-    .question h2 {
+    .question h2,
+    .outro h2 {
         font-size: 2rem;
         font-family: 'Roboto Condensed', sans-serif;
         font-weight: 600;
+        padding: 1rem 0;
     }
     
     main div.question,
     div .question h2 {
         text-align: left;
+    }
+    
+    #feedback {
+        color: gray;
+        font-size: 1.6rem;
+        font-style: italic;
+        font-weight: 100;
+        border-top: 2px solid;
     }
     
     .question ol {
@@ -65,29 +84,63 @@
     main div p {
         font-size: 1.3rem;
         font-weight: 300;
-        margin-bottom: 1.8rem;
+    }
+    
+    main .outro div {
+        font-size: 1.5rem;
     }
     
     li.btn {
         display: list-item;
         text-align: left;
         margin: 0 0 .8rem 0;
-        max-width: 15rem;
+        width: 33%;
     }
     
     .btn {
         border: none;
         background-color: var(--btn);
-        border-radius: 15px;
+        border-radius: 12px;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px 0px rgba(0, 0, 0, 0.2) 0px 1px 1px 0px;
         color: white;
         display: inline-block;
         font-size: 1.2rem;
-        padding: 1rem 1.7rem;
+        padding: .8rem 1.7rem .6rem 1.7rem;
         text-align: center;
         cursor: pointer;
     }
     
     .btn:hover {
         background-color: var(--btn-hover);
+    }
+    
+    form {
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        font-size: 1.3rem;
+    }
+    
+    .form * {
+        margin-right: .5rem;
+        font-size: 1.5rem;
+    }
+    
+    .form span {
+        font-style: normal;
+        align-self: flex-end;
+    }
+    
+    .form input {
+        flex: 3;
+        position: relative;
+        top: 0;
+        outline: none;
+        padding: 12px;
+        border: 1px solid grey;
+    }
+    
+    span.btn.highscore {
+        padding: .3rem 1.7rem .3rem 1.7rem;
     }
