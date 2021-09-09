@@ -26,6 +26,7 @@
     }
     
     #high-score {
+        cursor: pointer;
         color: var(--btn-hover);
         font-weight: 300;
     }

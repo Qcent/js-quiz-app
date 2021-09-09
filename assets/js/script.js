@@ -1,4 +1,5 @@
 let startQuizBtn = document.querySelector("#start-quiz");
+let viewScores = document.querySelector("#high-score");
 let timerValue = document.querySelector("#timer-value");
 let introCard = document.querySelector(".intro");
 let qHolder = document.querySelector("main");
@@ -6,6 +7,7 @@ let qHolder = document.querySelector("main");
 let quizTimer = 240;
 let score = 0;
 let currentQuestion = -1;
+let stopQuiz = false;
 
 const quizQuestion = [{
         Q: "What is your name?",
@@ -18,11 +20,20 @@ const quizQuestion = [{
         A: "3"
     }
 ];
+const showHighScore = function() {
+    alert("these are teh highScores");
+}
 const runQuizTimer = function() {
+    if (stopQuiz) { return; } // abort if stopQuiz is true
     setTimeout(function() {
+        if (stopQuiz) { return; } // abort if stopQuiz is true
         quizTimer--; // decrement timer
         timerValue.textContent = quizTimer; //update timer on screen
-        if (quizTimer <= 0) { alert("Time's Up"); return; } // if out of time alert
+        if (quizTimer <= 0) { // if out of time 
+            stopQuiz = true; // stop quiz
+            alert("Time's Up"); //alert
+            return; // abort countdown
+        }
         runQuizTimer(); // else run this function again 
     }, 1000); //in 1 second
 };
@@ -71,36 +82,34 @@ const questionButtonHandler = function(event) {
 };
 const nextQuestion = function() {
     currentQuestion++;
-    if (currentQuestion >= quizQuestion.length) { alert("You Reached the End!! \nYour Score: " + score + "/" + quizQuestion.length); return; }
+    if (currentQuestion >= quizQuestion.length) {
+        stopQuiz = true;
+        alert("You Reached the End!! \nYour Score: " + score + "/" +
+            quizQuestion.length);
+        return;
+    }
     renderQuestion(currentQuestion);
 }
 const startQuiz = function() {
     //clear the main section
     introCard.remove();
 
-    // reset score and timer , question count
+    // reset score, timer, question count and stopQuizz flag
+    stopQuiz = false;
     currentQuestion = -1;
     score = 0;
     quizTimer = 240;
-    timerValue.textContent = quizTimer;
+    timerValue.textContent = quizTimer; // update on screen timer
 
     // start the timer
     runQuizTimer();
 
-
-    /* begin to loop through all questions until questions or timer is exhusted */
-    //  while (quizTimer > 0 && currentQuestion < quizQuestion.length) {
-
-    //show question and wait for answer
-    nextQuestion();
-    /* this will not work in loop **************
-    //after answer increment counter and show next question
-    currentQuestion++;
-        
-    ******************/
-    // }
+    //show a question 
+    nextQuestion(); //will advance currentQuestion and display it
+    //all further steps are handeled byt the qHolder event listener
 
 };
 
+viewScores.addEventListener('click', showHighScore);
 startQuizBtn.addEventListener('click', startQuiz);
 qHolder.addEventListener("click", questionButtonHandler);
