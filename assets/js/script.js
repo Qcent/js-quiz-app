@@ -5,7 +5,7 @@ let qHolder = document.querySelector("main");
 let tempHolder = {};
 let quizFeedback = document.querySelector("#feedback");
 
-let quizTimer = 5;
+let quizTimer = 25;
 let score = 0;
 let currentQuestion = -1;
 let stopQuiz = false;
@@ -24,7 +24,7 @@ const quizQuestion = [{
     }
 ];
 const showHighScore = function() {
-    tempHolder.innerHTML = qHolder.innerHTML;
+    tempHolder = qHolder.innerHTML;
     qHolder.innerHTML = "<div class='intro'><h1>High Scores</h1>";
 
     highScores.forEach(function(hs) {
@@ -42,7 +42,7 @@ const runQuizTimer = function() {
         quizTimer--; // decrement timer
         timerValue.textContent = quizTimer; //update timer on screen
         if (quizTimer <= 0) { // if out of time 
-            stopQuiz = true; // stop quiz
+
             endQuiz("Time's Up"); //alert
             return; // abort countdown
         }
@@ -84,10 +84,16 @@ const questionButtonHandler = function(event) {
         var answerId = event.target.getAttribute("data-A-id");
 
         if (answerId === quizQuestion[currentQuestion].A) {
-            console.log("you chose wisely: ")
+            console.log("you chose wisely")
             score++;
         } else {
-            console.log("wrong")
+            console.log("wrong!")
+            quizTimer -= 10; // deduct time for wrong answer
+            timerValue.textContent = quizTimer; //update timer on screen
+            if (quizTimer <= 0) { //if tester is now out of time
+                endQuiz();
+                return;
+            }
         }
         let oldQuestion = document.querySelector(".question[data-Q-id='" + currentQuestion + "']");
         oldQuestion.remove();
@@ -101,13 +107,13 @@ const questionButtonHandler = function(event) {
     if (event.target.matches("#hs-ok")) { //only triggers if highscore ok button is pushed
         qHolder.innerHTML = '';
         if (stopQuiz && !hsInput) { qHolder.appendChild(introCard); } // restore the start screen
-        else { qHolder.innerHTML = tempHolder.innerHTML; }
+        else { qHolder.innerHTML = tempHolder; }
     }
 };
 const nextQuestion = function() {
     currentQuestion++;
     if (currentQuestion >= quizQuestion.length) {
-        stopQuiz = true;
+
         endQuiz();
         return;
     }
@@ -115,13 +121,13 @@ const nextQuestion = function() {
 }
 const startQuiz = function() {
     //clear the main section
-    introCard.remove();
+    qHolder.innerHTML = '';
 
     // reset score, timer, question count and stopQuizz flag
     stopQuiz = false;
     currentQuestion = -1;
     score = 0;
-    quizTimer = 5;
+    quizTimer = (quizQuestion.length) * 10; // add 10 seconds per question to the timer
     timerValue.textContent = quizTimer; // update on screen timer
 
     // start the timer
@@ -160,10 +166,11 @@ const renderEndGame = function(msg) {
 }
 const endQuiz = function(msg) {
     qHolder.innerHTML = ''; //clear the main section
+    stopQuiz = true; // stop quiz flag for timer abort
 
     if (!msg) { msg = "All done!"; } // a message for the end screen
     // calculate score
-    score += quizTimer;
+    score += (quizTimer > 0) ? quizTimer : 0; // if there is time on the clock add it to score otherwise add 0
 
     renderEndGame(msg);
 
@@ -175,13 +182,13 @@ const addScore = function(name, score) {
     let isHighScore = false;
 
     highScores.forEach(function(hs) {
-        if (score > hs.score) {
-            isHighScore = true;
+        if (score > hs.score) { // testers score > the stored score
+            isHighScore = true; // set highscore flag true
         }
     });
-    if (highScores.length < 5 || isHighScore) { //add the score
-        highScores.push({ "name": name, "score": score });
-        alert("You got a high score!");
+    if (highScores.length < 5 || isHighScore) { // if total hiscores are less then 5 or the high score flag was set
+        highScores.push({ "name": name, "score": score }); //add the score
+        alert("You got a high score!"); // alert the tester
         highScores.sort(function(a, b) { return b.score - a.score }); //sort by high score
         highScores = highScores.slice(0, 5); //only top 5 scores are kept
         localStorage.setItem('js-quiz-highscore', JSON.stringify(highScores)); //save the high scores
@@ -199,7 +206,6 @@ const loadScores = function() {
 }
 
 viewScores.addEventListener('click', showHighScore);
-//startQuizBtn.addEventListener('click', startQuiz);
 qHolder.addEventListener("click", questionButtonHandler);
 
 loadScores();
