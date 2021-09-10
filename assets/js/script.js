@@ -1,16 +1,16 @@
-let viewScores = document.querySelector("#high-score");
-let timerValue = document.querySelector("#timer-value");
-let introCard = document.querySelector(".intro");
-let qHolder = document.querySelector("main");
-let tempHolder = {};
-let quizFeedback = document.querySelector("#feedback");
+let viewScores = document.querySelector("#high-score"); //for registering click on View High Scores
+let timerValue = document.querySelector("#timer-value"); //for displaying onscreen timer
+let introCard = document.querySelector(".intro"); //for removing the intro and replacing the intro screen
+let qHolder = document.querySelector("main"); // the holder of the questions, introCard, enter initial and high score screens
+let tempHolder = {}; //used to store the qHolder when viewing high scores
+let quizFeedback = document.querySelector("#feedback"); // for displaying answer feedback
 
-let quizTimer = 25;
-let score = 0;
-let currentQuestion = -1;
-let stopQuiz = false;
-let hsInput = false;
-let highScores = [];
+let quizTimer = 25; //number of seconds on the clock. recalculated in startQuiz based on number of questions
+let score = 0; // testers score on quiz
+let currentQuestion = -1; // the current question
+let stopQuiz = false; //a flag to signify the state of the quiz
+let hsInput = false; //a flag to signal if the tester has been asked to input initials for high score
+let highScores = []; // declare a variable to hold the highscore data
 
 const quizQuestion = [{
         Q: "What is the correct syntax for referring to an external script?",
@@ -171,7 +171,6 @@ const quizQuestion = [{
         A: "0"
     },
 ];
-
 const randomizeQuestions = function() { //mix up them questions real good for replay value
     for (let i = quizQuestion.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * i);
@@ -179,23 +178,6 @@ const randomizeQuestions = function() { //mix up them questions real good for re
         quizQuestion.splice(i, 1, quizQuestion[j]);
         quizQuestion.splice(j, 1, temp);
     }
-}
-
-quizFeedback.displayFeedback = function(msg) {
-    /*because JavaScript is wild
-       // lets add this method to the quizzFeedback object we are using as a 
-       // DOM reference to the feedback div in the HTML */
-
-    //this method will replace the element 'feedback-wrapper' with a new one when a question is answered
-    // the element swap is used to refresh the css animation if ther user clicks quickly through answers
-    // this is the only way to restart the animation from the begining
-
-    let oldEl = quizFeedback.querySelector(".feedback-wrapper");
-    let newEl = document.createElement('div');
-    newEl.className = 'feedback-wrapper flashBack';
-    newEl.textContent = msg;
-
-    quizFeedback.replaceChild(newEl, oldEl);
 }
 const showHighScore = function() {
     if (qHolder.querySelector("h1") && qHolder.querySelector("h1").textContent === "High scores") { return; } //dont do anything if the High score is already on screen
@@ -235,6 +217,27 @@ const showHighScore = function() {
     qHolder.appendChild(holder);
 
 }
+const startQuiz = function() {
+    //shuffle up the questions
+    randomizeQuestions();
+    //clear the main section
+    qHolder.innerHTML = '';
+
+    // reset score, timer, question count and stopQuizz flag
+    stopQuiz = false;
+    currentQuestion = -1;
+    score = 0;
+    quizTimer = (quizQuestion.length) * 10; // add 10 seconds per question to the timer
+    timerValue.textContent = quizTimer; // update on screen timer
+
+    // start the timer
+    runQuizTimer();
+
+    //show a question 
+    nextQuestion(); //will advance currentQuestion and display it
+    //all further steps are handeled byt the qHolder event listener
+
+};
 const runQuizTimer = function() {
     if (stopQuiz) { // abort if stopQuiz is true
         return;
@@ -245,12 +248,21 @@ const runQuizTimer = function() {
         timerValue.textContent = quizTimer; //update timer on screen
         if (quizTimer <= 0) { // if out of time 
 
-            endQuiz("Time's Up"); //alert
+            endQuiz("Time's Up!"); //end quiz with msg "Time's Up!"
             return; // abort countdown
         }
         runQuizTimer(); // else run this function again 
     }, 1000); //in 1 second
 };
+const nextQuestion = function() {
+    currentQuestion++;
+    if (currentQuestion >= quizQuestion.length) {
+
+        endQuiz();
+        return;
+    }
+    renderQuestion(currentQuestion);
+}
 const renderQuestion = function(idx) {
     //create div element of class question
     let nextQ = document.createElement("div");
@@ -277,89 +289,30 @@ const renderQuestion = function(idx) {
 
     qHolder.appendChild(nextQ);
 }
-const questionButtonHandler = function(event) {
+quizFeedback.displayFeedback = function(msg) {
+    /*because JavaScript is wild, lets add this method to the quizzFeedback object we are using as a 
+       // DOM reference to the feedback div in the HTML */
 
-    if (event.target.matches("#start-quiz")) {
-        startQuiz();
-        return;
-    }
-    if (event.target.matches("li.btn")) { //only triggers if a li button is clicked (in quiz)
-        var answerId = event.target.getAttribute("data-A-id");
-        /* Question/Answer LOGIC */
-        if (answerId === quizQuestion[currentQuestion].A) { //CORRECT
-            console.log("you chose wisely")
-            score++;
-            quizFeedback.displayFeedback('Correct!');
-        } else { /*                                         //WRONG */
-            console.log("wrong!")
-            quizFeedback.displayFeedback('Wrong!');
-            quizTimer -= 10; // deduct time for wrong answer
-            timerValue.textContent = quizTimer; //update timer on screen
-            if (quizTimer <= 0) { //if tester is now out of time
-                endQuiz();
-                return;
-            }
-        }
-        /*************************** */
-        let oldQuestion = document.querySelector(".question[data-Q-id='" + currentQuestion + "']");
-        oldQuestion.remove();
+    //this method will replace the element 'feedback-wrapper' with a new one when a question is answered
+    // the element swap is used to refresh the css animation. f the user clicks quickly through answers
+    // this is the only way to restart the animation from the begining
 
-        nextQuestion();
-        return;
-    }
-    if (event.target.matches("span.btn")) { //only triggers if a span button is clicked ie the endGame high score form
-        timerValue.textContent = 0; // this can be 0 again on screen
-        let nameforScore = document.querySelector("#hs-name").value
-        addScore(nameforScore, score);
-        return;
-    }
-    if (event.target.matches("#hs-ok")) { //only triggers if highscore ok button is pushed
-        qHolder.innerHTML = '';
-        if (stopQuiz && !hsInput) { qHolder.appendChild(introCard); } // restore the start screen
-        else { qHolder.innerHTML = tempHolder; } //or restore the previous screen
-        return;
-    }
-    if (event.target.matches("#hs-clear")) { //only triggers if highscore clear button is pushed
-        if (confirm("Are you sure?")) {
-            localStorage.setItem('js-quiz-highscore', ''); //blank the high scores in storage
-            highScores = []; //blank highscores in memory
-            if (qHolder.querySelector("ol")) { //if highscore list exists
-                qHolder.querySelector("ol").remove(); // remove it
-            }
-        }
-        return;
-    }
+    let oldEl = quizFeedback.querySelector(".feedback-wrapper");
+    let newEl = document.createElement('div');
+    newEl.className = 'feedback-wrapper flashBack';
+    newEl.textContent = msg;
 
-};
-const nextQuestion = function() {
-    currentQuestion++;
-    if (currentQuestion >= quizQuestion.length) {
-
-        endQuiz();
-        return;
-    }
-    renderQuestion(currentQuestion);
+    quizFeedback.replaceChild(newEl, oldEl);
 }
-const startQuiz = function() {
-    //shuffle up the questions
-    randomizeQuestions();
-    //clear the main section
-    qHolder.innerHTML = '';
+const endQuiz = function(msg) {
+    qHolder.innerHTML = ''; //clear the main section
+    stopQuiz = true; // stop quiz flag for timer abort
 
-    // reset score, timer, question count and stopQuizz flag
-    stopQuiz = false;
-    currentQuestion = -1;
-    score = 0;
-    quizTimer = (quizQuestion.length) * 10; // add 10 seconds per question to the timer
-    timerValue.textContent = quizTimer; // update on screen timer
+    if (!msg) { msg = "All done!"; } // a message for the end screen
+    // calculate score
+    // score += (quizTimer > 0) ? quizTimer : 0; // if there is time on the clock add it to score otherwise add 0
 
-    // start the timer
-    runQuizTimer();
-
-    //show a question 
-    nextQuestion(); //will advance currentQuestion and display it
-    //all further steps are handeled byt the qHolder event listener
-
+    renderEndGame(msg);
 };
 const renderEndGame = function(msg) {
     //create div element of class question
@@ -387,19 +340,6 @@ const renderEndGame = function(msg) {
 
     qHolder.appendChild(endGame);
 }
-const endQuiz = function(msg) {
-    qHolder.innerHTML = ''; //clear the main section
-    stopQuiz = true; // stop quiz flag for timer abort
-
-    if (!msg) { msg = "All done!"; } // a message for the end screen
-    // calculate score
-    // score += (quizTimer > 0) ? quizTimer : 0; // if there is time on the clock add it to score otherwise add 0
-
-    renderEndGame(msg);
-
-    //quizFeedback.textContent = "Your Score: " + score;
-
-};
 const addScore = function(name, score) {
     hsInput = false;
     let isHighScore = false;
@@ -428,6 +368,59 @@ const loadScores = function() {
         highScores.sort(function(a, b) { return b.score - a.score }); //sort by highest score
     } else { highScores = []; } //make sure its not null
 }
+const questionButtonHandler = function(event) {
+
+    if (event.target.matches("#start-quiz")) {
+        startQuiz();
+        return;
+    }
+    if (event.target.matches("li.btn")) { //only triggers if a li button is clicked (in quiz)
+        var answerId = event.target.getAttribute("data-A-id");
+        /* Question/Answer LOGIC */
+        if (answerId === quizQuestion[currentQuestion].A) { //CORRECT
+            console.log("you chose wisely")
+            score++;
+            quizFeedback.displayFeedback('Correct!');
+        } else { /*                                         //WRONG */
+            console.log("wrong!")
+            quizFeedback.displayFeedback('Wrong!');
+            quizTimer -= 10; // deduct time for wrong answer
+            timerValue.textContent = quizTimer; //update timer on screen
+            if (quizTimer <= 0) { //if tester is now out of time
+                endQuiz();
+                return;
+            }
+        }
+        let oldQuestion = document.querySelector(".question[data-Q-id='" + currentQuestion + "']");
+        oldQuestion.remove(); //remove old question
+
+        nextQuestion(); //display the next question
+        return;
+    }
+    if (event.target.matches("span.btn")) { //only triggers if a span button is clicked ie the endGame high score form
+        timerValue.textContent = 0; // this can be 0 again on screen
+        let nameforScore = document.querySelector("#hs-name").value
+        addScore(nameforScore, score);
+        return;
+    }
+    if (event.target.matches("#hs-ok")) { //only triggers if highscore ok button is pushed
+        qHolder.innerHTML = '';
+        if (stopQuiz && !hsInput) { qHolder.appendChild(introCard); } // restore the start screen
+        else { qHolder.innerHTML = tempHolder; } //or restore the previous screen
+        return;
+    }
+    if (event.target.matches("#hs-clear")) { //only triggers if highscore clear button is pushed
+        if (confirm("Are you sure?")) {
+            localStorage.setItem('js-quiz-highscore', ''); //blank the high scores in storage
+            highScores = []; //blank highscores in memory
+            if (qHolder.querySelector("ol")) { //if highscore list exists
+                qHolder.querySelector("ol").remove(); // remove it
+            }
+        }
+        return;
+    }
+
+};
 
 viewScores.addEventListener('click', showHighScore);
 qHolder.addEventListener("click", questionButtonHandler);
