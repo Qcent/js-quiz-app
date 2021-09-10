@@ -23,6 +23,14 @@ const quizQuestion = [{
         A: "3"
     }
 ];
+quizFeedback.displayFeedback = function(msg) {
+    quizFeedback.textContent = msg; //display the text content of msg in the feedback area
+    quizFeedback.classList.add('flashBack'); // add the flashBack class for animation
+
+    setTimeout(function() {
+        quizFeedback.classList.remove('flashBack'); // remove the flasBack class
+    }, 2100); //in 2.1 seconds
+}
 const showHighScore = function() {
     tempHolder = qHolder.innerHTML;
     qHolder.innerHTML = "<div class='intro'><h1>High Scores</h1>";
@@ -86,8 +94,10 @@ const questionButtonHandler = function(event) {
         if (answerId === quizQuestion[currentQuestion].A) {
             console.log("you chose wisely")
             score++;
+            quizFeedback.displayFeedback('Correct!');
         } else {
             console.log("wrong!")
+            quizFeedback.displayFeedback('Wrong!');
             quizTimer -= 10; // deduct time for wrong answer
             timerValue.textContent = quizTimer; //update timer on screen
             if (quizTimer <= 0) { //if tester is now out of time
