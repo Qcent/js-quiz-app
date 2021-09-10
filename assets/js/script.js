@@ -10,6 +10,7 @@ let quizTimer = 240;
 let score = 0;
 let currentQuestion = -1;
 let stopQuiz = false;
+let highScores = [];
 
 const quizQuestion = [{
         Q: "What is your name?",
@@ -84,7 +85,8 @@ const questionButtonHandler = function(event) {
         nextQuestion();
     }
     if (event.target.matches("span.btn")) { //only triggers if a span button is clicked ie the endGame high score form
-        alert("high score entered");
+        let nameforScore = document.querySelector("#hs-name").value
+        addScore(nameforScore, score);
     }
 };
 const nextQuestion = function() {
@@ -153,7 +155,33 @@ const endQuiz = function(msg) {
     //quizFeedback.textContent = msg + "Your Score: " + score;
 
 };
+const addScore = function(name, score) {
+    let isHighScore = false;
+
+    highScores.forEach(function(hs) {
+        if (score > hs.score) {
+            isHighScore = true;
+        }
+    });
+    if (highScores.length < 5 || isHighScore) { //add the score
+        highScores.push({ "name": name, "score": score });
+        alert("You got a high score!");
+    }
+
+    highScores.sort(function(a, b) { return b.score - a.score }); //sort by high score
+    highScores = highScores.slice(0, 5); //only top 5 scores are kept
+
+    console.log(highScores);
+
+    localStorage.setItem('js-quiz-highscore', JSON.stringify(highScores)); //save the high scores
+}
+const loadScores = function() {
+    highScores = JSON.parse(localStorage.getItem('js-quiz-highscore'));
+    if (!highScores) { highScores = []; }
+}
 
 viewScores.addEventListener('click', showHighScore);
 startQuizBtn.addEventListener('click', startQuiz);
 qHolder.addEventListener("click", questionButtonHandler);
+
+loadScores();
