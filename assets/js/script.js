@@ -60,6 +60,11 @@ const quizQuestion = [{
         A: "1"
     },
     {
+        Q: "Math.random() will return a number between 1 and 10.",
+        options: ["True", "False", ],
+        A: "1"
+    },
+    {
         Q: "Which is the correct way to define a JavaScript Array.",
         options: ["var cars = \"Ford\", \"Mazda\", \"GMC\" ",
             "var cars = (\"Ford\", \"Mazda\", \"GMC\")",
@@ -68,7 +73,103 @@ const quizQuestion = [{
         ],
         A: "3"
     },
-
+    {
+        Q: "All of the following are Primitive Data types.",
+        options: ["const, int, var, string", "object, array, method, boolean", "string, boolean, number, null", "string, var, float, int", ],
+        A: "2"
+    },
+    {
+        Q: "To generate a random number in JavaScript which method should you invoke?",
+        options: ["Math.rand()", "Random.num()", "document.random()", "Math.random()", ],
+        A: "3"
+    },
+    {
+        Q: "How would you find the larger of the two numbers 'x' and 'y' ?",
+        options: ["Math.max(x, y)", "top(x, y)", "Math.ceil(x, y)", "Math.biggest(x, y)", ],
+        A: "0"
+    },
+    {
+        Q: "JavaScript is the same as Java.",
+        options: ["True", "False", ],
+        A: "1"
+    },
+    {
+        Q: "Which method can you use to monitor user interactions to trigger function calls?",
+        options: [".addEventManager", ".setEventListener", ".setEventTarget", ".addEventListener", ],
+        A: "3"
+    },
+    {
+        Q: "Which of the following will NOT increment the variable 'i'?",
+        options: ["i = i++", "i+1", "i++", "i=i+1", ],
+        A: "1"
+    },
+    {
+        Q: "What will the following code return: Boolean(10 > 9)?",
+        options: ["undefined", "false", "true", "NaN", ],
+        A: "2"
+    },
+    {
+        Q: "Which of the following is a valid JavaScript variable name",
+        options: ["$Variable1", "1stVariable", "variable-one", "#1Variable", ],
+        A: "0"
+    },
+    {
+        Q: "JavaScript variable names are NOT case sensitive.",
+        options: ["True", "False", ],
+        A: "1"
+    },
+    {
+        Q: "A JavaScript file has an extension of _______.",
+        options: [".Java", ".javascript", ".js", ".xml", ],
+        A: "2"
+    },
+    {
+        Q: "What function is used to evaluate a string as an interger?",
+        options: ["Math.parse()", "parseInt()", "Int.Parse()", ".parse.Int()", ],
+        A: "1"
+    },
+    {
+        Q: "Which of the dialog boxes display a message and a data entry field?",
+        options: ["alert()", "prompt()", "confirm()", "msg()", ],
+        A: "1"
+    },
+    {
+        Q: "A function associated with an object is called:",
+        options: ["a helper Function", "an ability", "a utility function", "a method", ],
+        A: "3"
+    },
+    {
+        Q: "JavaScript is a ______ -side programming language.",
+        options: ["server", "client", "dark", "east", ],
+        A: "1"
+    },
+    {
+        Q: "How do you call a JavaScript function after a certian amount of time has passed?",
+        options: ["setTimeout(function, delay)", "wait(delay, function)", "sleep(function, delay)", "timeOut(function, delay)", ],
+        A: "0"
+    },
+    {
+        Q: "What will be the output of the following code: let x = 10/2; if(4 < x){ console.log('more'); } else{ console.log('less');}",
+        options: ["undefined", "more", "NaN", "less", ],
+        A: "1"
+    },
+    {
+        Q: "What syntax can be used to change the content in the following HTML tag: <span id='changeMe'>Hello</span>",
+        options: ["document.getElement('#changeMe').innerHTML = 'OK'", "document.getElementById('#changeMe').value = 'OK'",
+            "document.querySelector('changeME').textContent = 'OK'", "document.querySelector('#changeME').textContent = 'OK'",
+        ],
+        A: "3"
+    },
+    {
+        Q: "What method would be used to save data to the users browser",
+        options: ["storeData.browser()", "setStorage.local()", "systemStorage.setItem()", "localStorage.setItem()", ],
+        A: "3"
+    },
+    {
+        Q: "JavaScript will ignore extra spaces.",
+        options: ["True", "False", ],
+        A: "0"
+    },
 ];
 quizFeedback.displayFeedback = function(msg) {
     /*because JavaScript is wild
@@ -321,5 +422,4 @@ qHolder.addEventListener("click", questionButtonHandler);
 
 loadScores();
 
-var newFunction = ("ford", "Mazda", "TEst")
-console.log(newFunction)
+console.log(quizQuestion.length)
