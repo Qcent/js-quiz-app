@@ -387,7 +387,7 @@ const questionButtonHandler = function(event) {
             quizTimer -= 10; // deduct time for wrong answer
             timerValue.textContent = quizTimer; //update timer on screen
             if (quizTimer <= 0) { //if tester is now out of time
-                endQuiz();
+                endQuiz("Time's Up!");
                 return;
             }
         }
@@ -419,7 +419,6 @@ const questionButtonHandler = function(event) {
         }
         return;
     }
-
 };
 
 viewScores.addEventListener('click', showHighScore);
