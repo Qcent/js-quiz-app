@@ -1,15 +1,15 @@
-let startQuizBtn = document.querySelector("#start-quiz");
 let viewScores = document.querySelector("#high-score");
 let timerValue = document.querySelector("#timer-value");
 let introCard = document.querySelector(".intro");
-let endGame = document.createElement("div");
 let qHolder = document.querySelector("main");
+let tempHolder = {};
 let quizFeedback = document.querySelector("#feedback");
 
-let quizTimer = 240;
+let quizTimer = 5;
 let score = 0;
 let currentQuestion = -1;
 let stopQuiz = false;
+let hsInput = false;
 let highScores = [];
 
 const quizQuestion = [{
@@ -24,7 +24,14 @@ const quizQuestion = [{
     }
 ];
 const showHighScore = function() {
-    alert("these are the highScores");
+    tempHolder.innerHTML = qHolder.innerHTML;
+    qHolder.innerHTML = "<div class='intro'><h1>High Scores</h1>";
+
+    highScores.forEach(function(hs) {
+        qHolder.innerHTML += "<div class='hiscore-entry'>" + hs.name + " - " + hs.score + "</div>"
+    });
+
+    qHolder.innerHTML += "<button class='btn' id='hs-ok'>Ok</button></div>";
 }
 const runQuizTimer = function() {
     if (stopQuiz) { // abort if stopQuiz is true
@@ -70,7 +77,10 @@ const renderQuestion = function(idx) {
 }
 const questionButtonHandler = function(event) {
 
-    if (event.target.matches("li.btn")) { //only triggers if a li button is clicked
+    if (event.target.matches("#start-quiz")) {
+        startQuiz();
+    }
+    if (event.target.matches("li.btn")) { //only triggers if a li button is clicked (in quiz)
         var answerId = event.target.getAttribute("data-A-id");
 
         if (answerId === quizQuestion[currentQuestion].A) {
@@ -87,6 +97,11 @@ const questionButtonHandler = function(event) {
     if (event.target.matches("span.btn")) { //only triggers if a span button is clicked ie the endGame high score form
         let nameforScore = document.querySelector("#hs-name").value
         addScore(nameforScore, score);
+    }
+    if (event.target.matches("#hs-ok")) { //only triggers if highscore ok button is pushed
+        qHolder.innerHTML = '';
+        if (stopQuiz && !hsInput) { qHolder.appendChild(introCard); } // restore the start screen
+        else { qHolder.innerHTML = tempHolder.innerHTML; }
     }
 };
 const nextQuestion = function() {
@@ -106,7 +121,7 @@ const startQuiz = function() {
     stopQuiz = false;
     currentQuestion = -1;
     score = 0;
-    quizTimer = 240;
+    quizTimer = 5;
     timerValue.textContent = quizTimer; // update on screen timer
 
     // start the timer
@@ -119,6 +134,8 @@ const startQuiz = function() {
 };
 const renderEndGame = function(msg) {
     //create div element of class question
+    hsInput = true;
+    let endGame = document.createElement("div");
     endGame.className = "outro";
 
     // add h2 title
@@ -142,20 +159,19 @@ const renderEndGame = function(msg) {
     qHolder.appendChild(endGame);
 }
 const endQuiz = function(msg) {
+    qHolder.innerHTML = ''; //clear the main section
 
-    if (!msg) { msg = "All done!"; } // make sure this isnt null
-
-    // qHolder.appendChild(introCard); // restore the start screen
-
+    if (!msg) { msg = "All done!"; } // a message for the end screen
     // calculate score
     score += quizTimer;
 
     renderEndGame(msg);
 
-    //quizFeedback.textContent = msg + "Your Score: " + score;
+    //quizFeedback.textContent = "Your Score: " + score;
 
 };
 const addScore = function(name, score) {
+    hsInput = false;
     let isHighScore = false;
 
     highScores.forEach(function(hs) {
@@ -166,22 +182,24 @@ const addScore = function(name, score) {
     if (highScores.length < 5 || isHighScore) { //add the score
         highScores.push({ "name": name, "score": score });
         alert("You got a high score!");
+        highScores.sort(function(a, b) { return b.score - a.score }); //sort by high score
+        highScores = highScores.slice(0, 5); //only top 5 scores are kept
+        localStorage.setItem('js-quiz-highscore', JSON.stringify(highScores)); //save the high scores
+    } else {
+        alert("Sorry, your score didn't make the cut.");
     }
 
-    highScores.sort(function(a, b) { return b.score - a.score }); //sort by high score
-    highScores = highScores.slice(0, 5); //only top 5 scores are kept
+    showHighScore();
 
-    console.log(highScores);
-
-    localStorage.setItem('js-quiz-highscore', JSON.stringify(highScores)); //save the high scores
 }
 const loadScores = function() {
-    highScores = JSON.parse(localStorage.getItem('js-quiz-highscore'));
-    if (!highScores) { highScores = []; }
+    highScores = JSON.parse(localStorage.getItem('js-quiz-highscore')); //load the data
+    if (!highScores) { highScores = []; } //make sure its not null
+    highScores.sort(function(a, b) { return b.score - a.score }); //sort by high score
 }
 
 viewScores.addEventListener('click', showHighScore);
-startQuizBtn.addEventListener('click', startQuiz);
+//startQuizBtn.addEventListener('click', startQuiz);
 qHolder.addEventListener("click", questionButtonHandler);
 
 loadScores();

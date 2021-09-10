@@ -38,15 +38,20 @@
         text-align: right;
     }
     
+    main {
+        flex-direction: column;
+    }
+    
     main div,
     #feedback {
         margin: 0 auto;
         min-width: 50%;
         max-width: 42rem;
-        font-size: 1.rem;
+        font-size: 1rem;
     }
     
-    main div.intro {
+    main div.intro,
+    .centered {
         text-align: center;
     }
     
@@ -143,4 +148,15 @@
     
     span.btn.highscore {
         padding: .3rem 1.7rem .3rem 1.7rem;
+    }
+    
+    div.hiscore-entry {
+        font-size: 1.3rem;
+        font-weight: 300;
+        text-align: center;
+    }
+    
+    #hs-ok {
+        width: 6rem;
+        margin: 1rem auto 0 auto;
     }
