@@ -24,14 +24,23 @@ const quizQuestion = [{
     }
 ];
 quizFeedback.displayFeedback = function(msg) {
-    quizFeedback.textContent = msg; //display the text content of msg in the feedback area
-    quizFeedback.classList.add('flashBack'); // add the flashBack class for animation
+    /*because JavaScript is wild
+       // lets add this method to the quizzFeedback object we are using as a 
+       // DOM reference to the feedback div in the HTML */
 
-    setTimeout(function() {
-        quizFeedback.classList.remove('flashBack'); // remove the flasBack class
-    }, 2100); //in 2.1 seconds
+    //this method will replace the element 'feedback-wrapper' with a new one when a question is answered
+    // the element swap is used to refresh the css animation if ther user clicks quickly through answers
+    // this is the only way to restart the animation from the begining
+
+    let oldEl = quizFeedback.querySelector(".feedback-wrapper");
+    let newEl = document.createElement('div');
+    newEl.className = 'feedback-wrapper flashBack';
+    newEl.textContent = msg;
+
+    quizFeedback.replaceChild(newEl, oldEl);
 }
 const showHighScore = function() {
+    if (qHolder.querySelector("h1").textContent === "High Scores") { return; } //dont do anything if the High score is already on screen
     tempHolder = qHolder.innerHTML;
     qHolder.innerHTML = "<div class='intro'><h1>High Scores</h1>";
 
