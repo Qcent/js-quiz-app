@@ -24,7 +24,7 @@ const quizQuestion = [{
     },
 
     {
-        Q: "Comminly used data types DO Not Include:",
+        Q: "Commonly used data types DO Not Include:",
         options: ["strings", "booleans", "alerts", "numbers"],
         A: "2"
     },
@@ -125,7 +125,7 @@ const quizQuestion = [{
     },
     {
         Q: "What function is used to evaluate a string as an interger?",
-        options: ["Math.parse()", "parseInt()", "Int.Parse()", ".parse.Int()", ],
+        options: ["Math.parse()", "parseInt()", "Int.Parse()", "parse.Int()", ],
         A: "1"
     },
     {
@@ -393,7 +393,7 @@ const endQuiz = function(msg) {
 
     if (!msg) { msg = "All done!"; } // a message for the end screen
     // calculate score
-    score += (quizTimer > 0) ? quizTimer : 0; // if there is time on the clock add it to score otherwise add 0
+    // score += (quizTimer > 0) ? quizTimer : 0; // if there is time on the clock add it to score otherwise add 0
 
     renderEndGame(msg);
 
