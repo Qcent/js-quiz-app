@@ -171,6 +171,16 @@ const quizQuestion = [{
         A: "0"
     },
 ];
+
+const randomizeQuestions = function() { //mix up them questions real good for replay value
+    for (let i = quizQuestion.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * i);
+        const temp = quizQuestion[i];
+        quizQuestion.splice(i, 1, quizQuestion[j]);
+        quizQuestion.splice(j, 1, temp);
+    }
+}
+
 quizFeedback.displayFeedback = function(msg) {
     /*because JavaScript is wild
        // lets add this method to the quizzFeedback object we are using as a 
@@ -331,6 +341,8 @@ const nextQuestion = function() {
     renderQuestion(currentQuestion);
 }
 const startQuiz = function() {
+    //shuffle up the questions
+    randomizeQuestions();
     //clear the main section
     qHolder.innerHTML = '';
 
@@ -421,5 +433,3 @@ viewScores.addEventListener('click', showHighScore);
 qHolder.addEventListener("click", questionButtonHandler);
 
 loadScores();
-
-console.log(quizQuestion.length)
