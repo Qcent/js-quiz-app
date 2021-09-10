@@ -118,7 +118,8 @@ li.btn {
     display: list-item;
     text-align: left;
     margin-bottom: .8rem;
-    width: 33%;
+    min-width: 33%;
+    max-width: fit-content;
 }
 
 .btn {

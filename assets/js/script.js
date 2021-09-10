@@ -13,15 +13,62 @@ let hsInput = false;
 let highScores = [];
 
 const quizQuestion = [{
-        Q: "What is your name?",
-        options: ["John", "Dave", "Kim", "Larry"],
+        Q: "What is the correct syntax for referring to an external script?",
+        options: ["<script src='script.js'>", "<script href='script.js'>", "<script link='script.js'>", ],
+        A: "0"
+    },
+    {
+        Q: "Inside which HTML element is JavaScript writen?",
+        options: ["<java>", "<js>", "<code>", "<script>"],
+        A: "3"
+    },
+
+    {
+        Q: "Comminly used data types DO Not Include:",
+        options: ["strings", "booleans", "alerts", "numbers"],
+        A: "2"
+    },
+
+    {
+        Q: "The condition in an if / else statement is enclosed with _________.",
+        options: ["quotes", "curly brackets", "parenthesis", "square breackets"],
         A: "1"
     },
     {
-        Q: "What is your favourite color?",
-        options: ["Blue", "Yellow", "Red", "Green"],
+        Q: "The external JavaScript file must contain the <script> tag.",
+        options: ["True", "False"],
+        A: "1"
+    },
+    {
+        Q: "How do you write \"Hello World\" in an alert box?",
+        options: ["msg(\"Hello World\")", "prompt(\"Hello World\")", "alert(\"Hello World\")", "alertBox(\"Hello World\")"],
+        A: "2"
+    },
+    {
+        Q: "What is not a valid JavaScript Function declaration?",
+        options: ["function newFunction(){}", "var newFunction = ()", "var newFunction = function() {}", ],
+        A: "1"
+    },
+    {
+        Q: "In JavaScript all functions will return undefined if no other value is provided.",
+        options: ["True", "False", ],
+        A: "0"
+    },
+    {
+        Q: "Which of the following is NOT a valid JavaScript comment.",
+        options: ["// I am a comment ", "<!-- I am a comment -->", " /* I am a comment */", ],
+        A: "1"
+    },
+    {
+        Q: "Which is the correct way to define a JavaScript Array.",
+        options: ["var cars = \"Ford\", \"Mazda\", \"GMC\" ",
+            "var cars = (\"Ford\", \"Mazda\", \"GMC\")",
+            "var cars = {0:\"Ford\", 1:\"Mazda\", 2:\"GMC\"}",
+            "var cars = [\"Ford\", \"Mazda\", \"GMC\"]"
+        ],
         A: "3"
-    }
+    },
+
 ];
 quizFeedback.displayFeedback = function(msg) {
     /*because JavaScript is wild
@@ -273,3 +320,6 @@ viewScores.addEventListener('click', showHighScore);
 qHolder.addEventListener("click", questionButtonHandler);
 
 loadScores();
+
+var newFunction = ("ford", "Mazda", "TEst")
+console.log(newFunction)
