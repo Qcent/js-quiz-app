@@ -139,7 +139,7 @@ const quizQuestion = [{
         A: "3"
     },
     {
-        Q: "JavaScript is a ______ -side programming language.",
+        Q: "Native JavaScript is a ______ -side programming language.",
         options: ["server", "client", "dark", "east", ],
         A: "1"
     },
