@@ -8,6 +8,8 @@
  :root {
     --btn: rgb(47, 26, 106);
     --btn-hover: rgb(181, 85, 227);
+    --hiscore1: rgb(212, 205, 230);
+    --hiscore2: rgb(236, 236, 247);
     font-size: 140%;
 }
 
@@ -28,13 +30,13 @@ header div {
     font-size: 1.1rem;
 }
 
-#high-score {
+header #high-score {
     cursor: pointer;
     color: var(--btn-hover);
     font-weight: 300;
 }
 
-#quiz-timer {
+header #quiz-timer {
     text-align: right;
 }
 
@@ -69,11 +71,6 @@ main div.intro,
     padding: 1rem 0;
 }
 
-main div.question,
-div .question h2 {
-    text-align: left;
-}
-
 #feedback {
     color: gray;
     font-size: 1.6rem;
@@ -103,25 +100,27 @@ div .question h2 {
     }
 }
 
-
-}
-.question ol {
-    list-style-position: inside;
-    padding: 0;
-}
 main div p {
     font-size: 1.3rem;
     font-weight: 300;
 }
+
 main .outro div {
     font-size: 1.5rem;
 }
+
+ol {
+    list-style-position: inside;
+    padding: 0;
+}
+
 li.btn {
     display: list-item;
     text-align: left;
-    margin: 0 0 .8rem 0;
+    margin-bottom: .8rem;
     width: 33%;
 }
+
 .btn {
     border: none;
     background-color: var(--btn);
@@ -131,12 +130,15 @@ li.btn {
     display: inline-block;
     font-size: 1.2rem;
     padding: .8rem 1.7rem .6rem 1.7rem;
+    margin-right: .6rem;
     text-align: center;
     cursor: pointer;
 }
+
 .btn:hover {
     background-color: var(--btn-hover);
 }
+
 form {
     display: flex;
     align-items: baseline;
@@ -144,14 +146,17 @@ form {
     flex-wrap: nowrap;
     font-size: 1.3rem;
 }
+
 .form * {
     margin-right: .5rem;
     font-size: 1.5rem;
 }
+
 .form span {
     font-style: normal;
     align-self: flex-end;
 }
+
 .form input {
     flex: 3;
     position: relative;
@@ -160,15 +165,19 @@ form {
     padding: 12px;
     border: 1px solid grey;
 }
-span.btn.highscore {
-    padding: .3rem 1.7rem .3rem 1.7rem;
-}
-div.hiscore-entry {
+
+.hiscore-entry {
     font-size: 1.3rem;
     font-weight: 300;
-    text-align: center;
+    padding: .4rem;
+    background-color: var(--hiscore1);
 }
-#hs-ok {
-    width: 6rem;
-    margin: 1rem auto 0 auto;
+
+li.hiscore-entry:nth-child(2n) {
+    background-color: var(--hiscore2);
+}
+
+.scores h1,
+li.hiscore-entry:last-child {
+    margin-bottom: 1rem;
 }

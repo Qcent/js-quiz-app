@@ -40,15 +40,42 @@ quizFeedback.displayFeedback = function(msg) {
     quizFeedback.replaceChild(newEl, oldEl);
 }
 const showHighScore = function() {
-    if (qHolder.querySelector("h1").textContent === "High Scores") { return; } //dont do anything if the High score is already on screen
-    tempHolder = qHolder.innerHTML;
-    qHolder.innerHTML = "<div class='intro'><h1>High Scores</h1>";
+    if (qHolder.querySelector("h1") && qHolder.querySelector("h1").textContent === "High scores") { return; } //dont do anything if the High score is already on screen
+    tempHolder = qHolder.innerHTML; //save everything that was on screen in the qHolder
 
-    highScores.forEach(function(hs) {
-        qHolder.innerHTML += "<div class='hiscore-entry'>" + hs.name + " - " + hs.score + "</div>"
+    let holder = document.createElement('div'); // recreate the high score info in HTML form
+    holder.className = "scores";
+    let title = document.createElement('h1');
+    title.textContent = "High scores"; //title
+    let list = document.createElement('ol'); //make a list
+
+    highScores.forEach(function(hs) { //loop through every score and list it
+        let listItem = document.createElement('li');
+        listItem.className = "hiscore-entry";
+        listItem.textContent = hs.name + " - " + hs.score;
+        list.appendChild(listItem);
     });
 
-    qHolder.innerHTML += "<button class='btn' id='hs-ok'>Ok</button></div>";
+    let but1 = document.createElement("button"); //make a button
+    but1.className = "btn";
+    but1.id = "hs-ok";
+    but1.textContent = "Go back"
+
+    let but2 = document.createElement("button"); // make another button
+    but2.className = "btn";
+    but2.id = "hs-clear";
+    but2.textContent = "Clear high scores"
+
+    /* start the showing */
+    qHolder.innerHTML = '';
+
+    holder.appendChild(title);
+    holder.appendChild(list);
+    holder.appendChild(but1);
+    holder.appendChild(but2);
+
+    qHolder.appendChild(holder);
+
 }
 const runQuizTimer = function() {
     if (stopQuiz) { // abort if stopQuiz is true
@@ -96,15 +123,16 @@ const questionButtonHandler = function(event) {
 
     if (event.target.matches("#start-quiz")) {
         startQuiz();
+        return;
     }
     if (event.target.matches("li.btn")) { //only triggers if a li button is clicked (in quiz)
         var answerId = event.target.getAttribute("data-A-id");
-
-        if (answerId === quizQuestion[currentQuestion].A) {
+        /* Question/Answer LOGIC */
+        if (answerId === quizQuestion[currentQuestion].A) { //CORRECT
             console.log("you chose wisely")
             score++;
             quizFeedback.displayFeedback('Correct!');
-        } else {
+        } else { /*                                         //WRONG */
             console.log("wrong!")
             quizFeedback.displayFeedback('Wrong!');
             quizTimer -= 10; // deduct time for wrong answer
@@ -114,20 +142,36 @@ const questionButtonHandler = function(event) {
                 return;
             }
         }
+        /*************************** */
         let oldQuestion = document.querySelector(".question[data-Q-id='" + currentQuestion + "']");
         oldQuestion.remove();
 
         nextQuestion();
+        return;
     }
     if (event.target.matches("span.btn")) { //only triggers if a span button is clicked ie the endGame high score form
+        timerValue.textContent = 0; // this can be 0 again on screen
         let nameforScore = document.querySelector("#hs-name").value
         addScore(nameforScore, score);
+        return;
     }
     if (event.target.matches("#hs-ok")) { //only triggers if highscore ok button is pushed
         qHolder.innerHTML = '';
         if (stopQuiz && !hsInput) { qHolder.appendChild(introCard); } // restore the start screen
-        else { qHolder.innerHTML = tempHolder; }
+        else { qHolder.innerHTML = tempHolder; } //or restore the previous screen
+        return;
     }
+    if (event.target.matches("#hs-clear")) { //only triggers if highscore clear button is pushed
+        if (confirm("Are you sure?")) {
+            localStorage.setItem('js-quiz-highscore', ''); //blank the high scores in storage
+            highScores = []; //blank highscores in memory
+            if (qHolder.querySelector("ol")) { //if highscore list exists
+                qHolder.querySelector("ol").remove(); // remove it
+            }
+        }
+        return;
+    }
+
 };
 const nextQuestion = function() {
     currentQuestion++;
@@ -205,7 +249,7 @@ const addScore = function(name, score) {
             isHighScore = true; // set highscore flag true
         }
     });
-    if (highScores.length < 5 || isHighScore) { // if total hiscores are less then 5 or the high score flag was set
+    if ((highScores.length < 5 || isHighScore) && score > 0) { // if total hiscores are less then 5 or the high score flag was set and score is >0
         highScores.push({ "name": name, "score": score }); //add the score
         alert("You got a high score!"); // alert the tester
         highScores.sort(function(a, b) { return b.score - a.score }); //sort by high score
@@ -219,9 +263,10 @@ const addScore = function(name, score) {
 
 }
 const loadScores = function() {
-    highScores = JSON.parse(localStorage.getItem('js-quiz-highscore')); //load the data
-    if (!highScores) { highScores = []; } //make sure its not null
-    highScores.sort(function(a, b) { return b.score - a.score }); //sort by high score
+    if (localStorage.getItem('js-quiz-highscore')) { //if data exists
+        highScores = JSON.parse(localStorage.getItem('js-quiz-highscore')); //load the data
+        highScores.sort(function(a, b) { return b.score - a.score }); //sort by highest score
+    } else { highScores = []; } //make sure its not null
 }
 
 viewScores.addEventListener('click', showHighScore);
