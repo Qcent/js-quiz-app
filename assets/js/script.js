@@ -32,7 +32,7 @@ const quizQuestion = [{
     {
         Q: "The condition in an if / else statement is enclosed with _________.",
         options: ["quotes", "curly brackets", "parenthesis", "square breackets"],
-        A: "1"
+        A: "2"
     },
     {
         Q: "The external JavaScript file must contain the <script> tag.",
