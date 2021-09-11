@@ -1,6 +1,8 @@
 # JavaScript Quiz on JavaScript
 `js-quiz` a timed quiz on JavaScript fundamentals. Functions in browser, this quiz will keep the top 5 scores on a persistent leader board in localStorage. 
 
+The current array of questions are all JavaScript related, but could easily be altered to test on any subject matter.
+
 ## Programming Objectives
 * Dynamically alter HTML with JavaScript to prevent loading new html pages.
 * Create an array of multiple-choice question objects. containing question, potential answers, and correct answer.
@@ -20,7 +22,8 @@ Once [the page](https://qcent.github.io/js-quiz-app/) loads you will be greeted 
 ![js-quiz underway](./assets/images/app-screenshot2.png)
 When the quiz begins you will be presented with up to 30 multiple choice questions. Simply click or tap on the answer that satisfies you best, to submit it as your choice. You will instantly be taken to the next question and a flash of either *'Correct!'* or *'Wrong!'* will appear at the bottom of the screen to let you know how you did.
 
-The quiz will end once tester has exhausted all questions or the timer has reached 0. An input for your initials (up to 4 characters) is shown and you can submit your name and score to the leaderboard. The top 5 best scores are saved for posterity in the browsers localStorage. But can be wiped away with the click of a button or two.
+![js-quiz end of the road](./assets/images/app-screenshot3.png)
+The quiz will end once tester has exhausted all questions or the timer has reached 0. Then an input for your initials (up to 4 characters) is shown and you can submit your name and score to the leaderboard. The top 5 best scores are saved for posterity in the browsers localStorage. But can be wiped away with the click of a button or two.
 
 ## Contributing
 
