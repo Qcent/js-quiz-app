@@ -27,12 +27,12 @@ The quiz will end once tester has exhausted all questions or the timer has reach
 
 ## Contributing
 
-Contributions to `js-quizz` are welcomed! 
+Contributions to `js-quiz` are welcomed! 
 
 ## License
-`js-quizz` is Copyright 2021 Dave Quinn - Quinnco Enterprises.
+`js-quiz` is Copyright 2021 Dave Quinn - Quinnco Enterprises.
 
-`js-quizz` is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+`js-quiz` is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 Copyright 2021 Dave Quinn
 
