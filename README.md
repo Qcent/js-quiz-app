@@ -17,12 +17,15 @@ The current array of questions are all JavaScript related, but could easily be a
 `js-quiz` is a 30 question length, multiple choice, timed examination of one's basic JavaScript knowledge. The entirety of the app can be navigated with the click of a mouse or a tap of a button with minimal scrolling at worst. 10 seconds is given for each question in the quiz for a total of 300 seconds, and 10 second shall be deducted for every wrong answer.
 
 ![The intro screen of js-quiz](./assets/images/app-screenshot1.png)
+
 Once [the page](https://qcent.github.io/js-quiz-app/) loads you will be greeted with the above screen where you may view current high scores or start the quiz.
 
 ![js-quiz underway](./assets/images/app-screenshot2.png)
+
 When the quiz begins you will be presented with up to 30 multiple choice questions. Simply click or tap on the answer that satisfies you best, to submit it as your choice. You will instantly be taken to the next question and a flash of either *'Correct!'* or *'Wrong!'* will appear at the bottom of the screen to let you know how you did.
 
 ![js-quiz end of the road](./assets/images/app-screenshot3.png)
+
 The quiz will end once tester has exhausted all questions or the timer has reached 0. Then an input for your initials (up to 4 characters) is shown and you can submit your name and score to the leaderboard. The top 5 best scores are saved for posterity in the browsers localStorage. But can be wiped away with the click of a button or two.
 
 ## Contributing
