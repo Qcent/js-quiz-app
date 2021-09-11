@@ -18,7 +18,7 @@ const quizQuestion = [{
         A: "0"
     },
     {
-        Q: "Inside which HTML element is JavaScript writen?",
+        Q: "Inside which HTML element is JavaScript written?",
         options: ["<java>", "<js>", "<code>", "<script>"],
         A: "3"
     },
