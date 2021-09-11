@@ -104,7 +104,7 @@ const quizQuestion = [{
         A: "1"
     },
     {
-        Q: "What will the following code return: Boolean(10 > 9)?",
+        Q: "What will the following code return:</h2><pre><code> Boolean(10 > 9)</code></pre>",
         options: ["undefined", "false", "true", "NaN", ],
         A: "2"
     },
@@ -149,15 +149,15 @@ const quizQuestion = [{
         A: "0"
     },
     {
-        Q: "What will be the output of the following code:</h2> \
-            <pre><code> \n let x = 10/2; \n if(4 < x){ console.log('more'); } \n else{ console.log('less');}</code></pre>",
+        Q: "What will the following code output:</h2> \
+            <pre><code> let x = 10/2; \n if(4 < x){ return 'more'; } \n else{ return 'less'; }</code></pre>",
         options: ["undefined", "more", "NaN", "less", ],
         A: "1"
     },
     {
         Q: "What syntax can be used to change the content in the following HTML tag: <span id='changeMe'>Hello</span>",
-        options: ["document.getElement('#changeMe').innerHTML = 'OK'", "document.getElementById('#changeMe').value = 'OK'",
-            "document.querySelector('changeME').textContent = 'OK'", "document.querySelector('#changeME').textContent = 'OK'",
+        options: ["document.getElement ('#changeMe').innerHTML = 'OK'", "document.getElementById ('#changeMe').value = 'OK'",
+            "document.querySelector ('changeME').textContent = 'OK'", "document.querySelector ('#changeME').textContent = 'OK'",
         ],
         A: "3"
     },

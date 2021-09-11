@@ -116,9 +116,11 @@ ol {
 li.btn {
     display: list-item;
     text-align: left;
-    margin-bottom: .8rem;
+    margin-bottom: .2rem;
     min-width: 33%;
     max-width: fit-content;
+    padding-left: 2rem;
+    text-indent: -1.5rem;
 }
 
 .btn {
@@ -131,6 +133,7 @@ li.btn {
     font-size: 1.2rem;
     padding: .6rem 1.7rem .6rem 1.7rem;
     margin-right: .6rem;
+    margin-bottom: .6rem;
     text-align: center;
     cursor: pointer;
 }
@@ -149,6 +152,7 @@ form {
 
 .form * {
     margin-right: .5rem;
+    margin-bottom: .5rem;
     font-size: 1.5rem;
 }
 
@@ -180,4 +184,37 @@ li.hiscore-entry:nth-child(2n) {
 .scores h1,
 li.hiscore-entry:last-child {
     margin-bottom: 1rem;
+}
+
+pre code {
+    display: inline-block;
+    font-size: 1rem;
+    padding-left: 2rem;
+}
+
+@media screen and (max-width: 1024px) {
+     :root {
+        font-size: 120%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+     :root {
+        font-size: 110%;
+    }
+    main {
+        padding-top: .5rem;
+    }
+}
+
+@media screen and (max-width: 425px) {
+     :root {
+        font-size: 90%;
+    }
+    main {
+        padding-top: 0;
+    }
+    pre code {
+        padding-left: 1.2rem;
+    }
 }
