@@ -31,7 +31,7 @@ const quizQuestion = [{
 
     {
         Q: "The condition in an if / else statement is enclosed with _________.",
-        options: ["quotes", "curly brackets", "parenthesis", "square breackets"],
+        options: ["quotes", "curly brackets", "parenthesis", "square brackets"],
         A: "2"
     },
     {
