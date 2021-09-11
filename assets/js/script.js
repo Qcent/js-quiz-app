@@ -144,7 +144,7 @@ const quizQuestion = [{
         A: "1"
     },
     {
-        Q: "How do you call a JavaScript function after a certian amount of time has passed?",
+        Q: "How do you call a JavaScript function after a certain amount of time has passed?",
         options: ["setTimeout(function, delay)", "wait(delay, function)", "sleep(function, delay)", "timeOut(function, delay)", ],
         A: "0"
     },
