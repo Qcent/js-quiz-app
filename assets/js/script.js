@@ -149,7 +149,7 @@ const quizQuestion = [{
         A: "0"
     },
     {
-        Q: "What will be the output of the following code: \
+        Q: "What will be the output of the following code:</h2> \
             <pre><code> \n let x = 10/2; \n if(4 < x){ console.log('more'); } \n else{ console.log('less');}</code></pre>",
         options: ["undefined", "more", "NaN", "less", ],
         A: "1"
