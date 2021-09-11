@@ -35,7 +35,7 @@ const quizQuestion = [{
         A: "2"
     },
     {
-        Q: "The external JavaScript file must contain the <script> tag.",
+        Q: "The external JavaScript file must contain the &lt;script&gt; tag.",
         options: ["True", "False"],
         A: "1"
     },
