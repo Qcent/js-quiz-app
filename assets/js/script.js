@@ -149,7 +149,8 @@ const quizQuestion = [{
         A: "0"
     },
     {
-        Q: "What will be the output of the following code: let x = 10/2; if(4 < x){ console.log('more'); } else{ console.log('less');}",
+        Q: "What will be the output of the following code: \
+            <pre><code> \n let x = 10/2; \n if(4 < x){ console.log('more'); } \n else{ console.log('less');}</code></pre>",
         options: ["undefined", "more", "NaN", "less", ],
         A: "1"
     },
@@ -271,7 +272,7 @@ const renderQuestion = function(idx) {
 
     // add h2 element that contains question
     let qh2 = document.createElement('h2');
-    qh2.textContent = quizQuestion[idx].Q;
+    qh2.innerHTML = quizQuestion[idx].Q;
 
     //create ul of possible answers
     let qol = document.createElement("ol");
