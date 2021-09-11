@@ -6,7 +6,7 @@ The current array of questions are all JavaScript related, but could easily be a
 ## Programming Objectives
 * Dynamically alter HTML with JavaScript to prevent loading new html pages.
 * Create an array of multiple-choice question objects. containing question, potential answers, and correct answer.
-* Randomize the questions array on quiz start to ad some unpredictability to retake value.
+* Randomize the questions array on quiz start to add some unpredictability to retake value.
 * Use event listeners to trigger function calls based on what a user clicks.
 * Using event.target.matches() to determine element clicked.
 * Use setTimeout in a recursive function that decrements a variable every second to create a countdown timer.
@@ -14,7 +14,7 @@ The current array of questions are all JavaScript related, but could easily be a
 * Create a responsive design that is as true to the Mock-up as I can get.
 
 ## Usage
-`js-quiz` is a 30 question length, multiple choice, timed examination of ones basic JavaScript knowledge. The entirety of the app can be navigated with the click of a mouse or a tap of a button with minimal scrolling at worst. 10 seconds is given for each question in the quiz for a total of 300 seconds, and 10 second shall be deducted for every wrong answer.
+`js-quiz` is a 30 question length, multiple choice, timed examination of one's basic JavaScript knowledge. The entirety of the app can be navigated with the click of a mouse or a tap of a button with minimal scrolling at worst. 10 seconds is given for each question in the quiz for a total of 300 seconds, and 10 second shall be deducted for every wrong answer.
 
 ![The intro screen of js-quiz](./assets/images/app-screenshot1.png)
 Once [the page](https://qcent.github.io/js-quiz-app/) loads you will be greeted with the above screen where you may view current high scores or start the quiz.
